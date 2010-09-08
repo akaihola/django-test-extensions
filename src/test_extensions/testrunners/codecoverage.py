@@ -87,8 +87,8 @@ def get_all_coverage_modules(app_module):
 
     return mod_list
 
-def run_tests(test_labels, verbosity=1, interactive=True,
-        extra_tests=[], nodatabase=False, xml_out=False, callgraph=False):
+def run_tests(test_labels, verbosity=1, interactive=True, failfast=False,
+              extra_tests=[], nodatabase=False, xml_out=False, callgraph=False):
     """
     Test runner which displays a code coverage report at the end of the
     run.
@@ -146,11 +146,11 @@ def run_tests(test_labels, verbosity=1, interactive=True,
 
     if nodatabase:
         results = nodatabase_run_tests(test_labels, verbosity, interactive,
-            extra_tests)
+            failfast, extra_tests)
     else:
         results = django_test_runner(test_labels, verbosity, interactive,
-            extra_tests)
-    
+            failfast, extra_tests)
+
     if callgraph and pycallgraph_enabled:
         pycallgraph.stop_trace()
 
@@ -191,7 +191,7 @@ def run_tests(test_labels, verbosity=1, interactive=True,
     return results
 
 
-def run_tests_xml (test_labels, verbosity=1, interactive=True,
-        extra_tests=[], nodatabase=False):
-    return run_tests(test_labels, verbosity, interactive,
+def run_tests_xml(test_labels, verbosity=1, interactive=True, failfast=False,
+                  extra_tests=[], nodatabase=False):
+    return run_tests(test_labels, verbosity, interactive, failfast,
                extra_tests, nodatabase, xml_out=True)

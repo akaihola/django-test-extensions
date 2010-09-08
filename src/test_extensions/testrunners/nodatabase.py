@@ -13,7 +13,8 @@ from django.test.simple import *
 
 import coverage
 
-def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
+def run_tests(test_labels,
+              verbosity=1, interactive=True, failfast=False, extra_tests=[]):
     """
     Run the unit tests for all the test labels in the provided list.
     Labels must be of the form:
@@ -71,7 +72,7 @@ def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
 
     return len(result.failures) + len(result.errors)
 
-def run_tests_with_coverage(test_labels, verbosity=1, interactive=True, extra_tests=[], xml_out=False):
+def run_tests_with_coverage(test_labels, verbosity=1, interactive=True, failfast=False, extra_tests=[], xml_out=False):
     """
     Run the unit tests for all the test labels in the provided list.
     Labels must be of the form:
@@ -151,6 +152,10 @@ def run_tests_with_coverage(test_labels, verbosity=1, interactive=True, extra_te
 
     return len(result.failures) + len(result.errors)
 
-def run_tests_with_xmlcoverage(test_labels, verbosity=1, interactive=True, extra_tests=[]):
-   return run_tests_with_coverage(test_labels, verbosity, interactive, extra_tests, xml_out=True) 
 
+def run_tests_with_xmlcoverage(
+    test_labels, verbosity=1, interactive=True, failfast=False, extra_tests=[]):
+
+    return run_tests_with_coverage(
+        test_labels,
+        verbosity, interactive, failfast, extra_tests, xml_out=True)

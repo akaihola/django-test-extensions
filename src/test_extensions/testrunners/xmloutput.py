@@ -16,7 +16,8 @@ try:
 except NameError:  # DjangoTestSuiteRunner is not available in Django < 1.2
     pass
 
-def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
+def run_tests(test_labels,
+              verbosity=1, interactive=True, failfast=False, extra_tests=[]):
     setup_test_environment()
 
     settings.DEBUG = False

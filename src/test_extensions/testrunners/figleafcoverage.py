@@ -6,10 +6,12 @@ from django.test.simple import run_tests as django_test_runner
 
 import figleaf
  
-def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
+def run_tests(test_labels,
+              verbosity=1, interactive=True, failfast=False, extra_tests=[]):
     setup_test_environment()
     figleaf.start()
-    test_results = django_test_runner(test_labels, verbosity, interactive, extra_tests)
+    test_results = django_test_runner(
+        test_labels, verbosity, interactive, failfast, extra_tests)
     figleaf.stop()
     if not os.path.isdir(os.path.join("temp", "figleaf")): os.makedirs(os.path.join("temp", "figleaf"))
     file_name = "temp/figleaf/test_output.figleaf"
